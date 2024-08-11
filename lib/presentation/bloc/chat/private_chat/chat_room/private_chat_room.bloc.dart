@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
+import 'package:portfolio/core/util/exception.util.dart';
+import 'package:portfolio/domain/entity/auth/presence.entity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../../core/constant/status.dart';
 import '../../../../../domain/entity/chat/private_chat_message.entity.dart';
@@ -89,6 +92,7 @@ class PrivateChatRoomBloc
         event.message,
         ...state.chatMessages,
       ]));
+      await _useCase.insertOnLocal(event.message);
     } catch (error) {
       log("_onNewMessage ${error.toString()}");
       emit(state.copyWith(status: Status.error, message: 'error occurs'));
@@ -104,6 +108,7 @@ class PrivateChatRoomBloc
                   ? e.copyWith(content: "Removed Message", isRemoved: true)
                   : e)
               .toList()));
+      await _useCase.deletePrivateChatMessage(event.message.id!);
     } catch (error) {
       log("_onDeletedMessage ${error.toString()}");
       emit(state.copyWith(status: Status.error, message: 'error occurs'));

@@ -10,7 +10,8 @@ import '../abstract/chat_message.remote_datasource.dart';
 
 part "../abstract/open_chat_message.remote_datasource.dart";
 
-class OpenChatMessageRemoteDataSourceImpl implements OpenChatMessageRemoteDataSource {
+class OpenChatMessageRemoteDataSourceImpl
+    implements OpenChatMessageRemoteDataSource {
   final SupabaseClient _client;
   final Logger _logger;
 
@@ -56,11 +57,15 @@ class OpenChatMessageRemoteDataSourceImpl implements OpenChatMessageRemoteDataSo
   }
 
   @override
-  Future<void> createChatMessage(OpenChatMessageModel model) async {
+  Future<OpenChatMessageModel> sendMessage(
+      OpenChatMessageModel model) async {
     try {
       final audited = audit(model);
       _logger.d(audited);
-      return await _client.rest.from(tableName).insert(audited.toJson());
+      return await _client.rest
+          .from(tableName)
+          .insert(audited.toJson())
+          .then((_) => audited);
     } catch (e) {
       throw CustomException.from(e, logger: _logger);
     }
@@ -113,7 +118,7 @@ class OpenChatMessageRemoteDataSourceImpl implements OpenChatMessageRemoteDataSo
   }
 
   @override
-  Future<void> deleteChatMessageById(String messageId) async {
+  Future<void> deleteById(String messageId) async {
     return await _client.rest
         .from(tableName)
         .delete()

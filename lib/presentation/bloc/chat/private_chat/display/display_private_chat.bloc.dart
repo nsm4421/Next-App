@@ -6,7 +6,6 @@ import 'package:portfolio/domain/usecase/auth/auth.usecase_module.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../core/constant/status.dart';
-import '../../../../../domain/entity/auth/presence.entity.dart';
 import '../../../../../domain/entity/chat/private_chat_message.entity.dart';
 import '../../../../../domain/usecase/chat/chat.usecase_module.dart';
 import '../../chat.bloc_module.dart';
@@ -43,8 +42,7 @@ class DisplayPrivateChatBloc
     try {
       emit(state.copyWith(status: Status.loading));
       // TODO : 로컬 DB 기능 구현이 완료되면 afterAt에 local DB에서 가져온 시간을 넣기
-      final res = await _chatUseCase.fetchLatestChatMessages(
-          DateTime.parse("1900-01-01 00:00:00.0000+00"));
+      final res = await _chatUseCase.fetchLatestChatMessages();
       if (res.ok) {
         emit(state.copyWith(
             status: Status.success,

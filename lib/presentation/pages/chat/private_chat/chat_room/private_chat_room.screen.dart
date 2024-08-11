@@ -49,7 +49,7 @@ class _PrivateChatRoomScreenState extends State<PrivateChatRoomScreen> {
             icon: const Icon(Icons.clear),
           ),
           // 상대방 유저 닉네임
-          title: Text(widget.opponent.nickname!,
+          title: Text(widget.opponent.nickname ?? "",
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onPrimary,
                   overflow: TextOverflow.ellipsis)),

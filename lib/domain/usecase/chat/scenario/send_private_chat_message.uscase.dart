@@ -9,7 +9,6 @@ class SendPrivateChatMessageUseCase {
 
   Future<ResponseWrapper<void>> call(
       {required String receiver, required String content}) async {
-    return await _repository.createChatMessage(
-        content: content, receiver: receiver);
+    return await _repository.sendMessage(content: content, receiver: receiver);
   }
 }

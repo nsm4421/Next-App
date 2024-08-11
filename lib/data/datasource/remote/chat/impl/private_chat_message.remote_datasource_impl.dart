@@ -10,7 +10,8 @@ import '../abstract/chat_message.remote_datasource.dart';
 
 part "../abstract/private_chat_message.remote_datasource.dart";
 
-class PrivateChatMessageRemoteDataSourceImpl implements PrivateChatMessageRemoteDataSource {
+class PrivateChatMessageRemoteDataSourceImpl
+    implements PrivateChatMessageRemoteDataSource {
   final SupabaseClient _client;
   final Logger _logger;
 
@@ -39,18 +40,20 @@ class PrivateChatMessageRemoteDataSourceImpl implements PrivateChatMessageRemote
   }
 
   @override
-  Future<void> createChatMessage(PrivateChatMessageModel model) async {
+  Future<PrivateChatMessageModel> sendMessage(
+      PrivateChatMessageModel model) async {
     try {
       final audited = audit(model);
       _logger.d(audited);
       await _client.rest.from(tableName).insert(audited.toJson());
+      return audited;
     } catch (e) {
       throw CustomException.from(e, logger: _logger);
     }
   }
 
   @override
-  Future<void> deleteChatMessageById(String messageId) async {
+  Future<void> deleteById(String messageId) async {
     try {
       await _client.rest.from(tableName).delete().eq("id", messageId);
     } catch (e) {
@@ -74,6 +77,7 @@ class PrivateChatMessageRemoteDataSourceImpl implements PrivateChatMessageRemote
     }
   }
 
+  @Deprecated('메시지 조회는 Remote DB가 아니라 Local DB를 조회 하도록 변경함')
   @override
   Future<Iterable<PrivateChatMessageWithUserModel>> fetchMessages(
       {required DateTime beforeAt,

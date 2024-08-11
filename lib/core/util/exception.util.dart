@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../constant/error_code.dart';
@@ -43,6 +44,11 @@ class CustomException implements Exception {
           errorCode: errorCode ?? ErrorCode.bucket,
           message: message ?? error.message,
           description: error.error);
+    } else if (error is DatabaseException) {
+      return CustomException(
+          errorCode: errorCode ?? ErrorCode.sqlite,
+          message: message ?? error.getResultCode().toString(),
+          description: error.result.toString());
     }
     return CustomException(
         errorCode: ErrorCode.unknown,

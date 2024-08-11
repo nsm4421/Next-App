@@ -1,9 +1,9 @@
 part of "private_chat_room.page.dart";
 
 class PrivateChatRoomTextFieldWidget extends StatefulWidget {
-  const PrivateChatRoomTextFieldWidget(this.receiverUid, {super.key});
+  const PrivateChatRoomTextFieldWidget(this.opponentUid, {super.key});
 
-  final String receiverUid;
+  final String opponentUid;
 
   @override
   State<PrivateChatRoomTextFieldWidget> createState() =>
@@ -32,7 +32,7 @@ class _PrivateChatRoomTextFieldWidgetState
       return;
     }
     context.read<PrivateChatRoomBloc>().add(SendPrivateChatMessageEvent(
-        content: content, receiver: widget.receiverUid));
+        content: content, receiver: widget.opponentUid));
     _tec.clear();
   }
 

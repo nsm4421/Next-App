@@ -5,6 +5,7 @@ enum TableName {
   emotion("emotions"),
   openChatRoom("open_chat_rooms"),
   openChatMessage("open_chat_messages"),
+  privateChat("private_chat"),
   privateChatMessage("private_chat_messages"),
   ;
 

@@ -37,6 +37,17 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       appBar: AppBar(
         title: const Text("CHAT"),
         actions: [
+          // test
+          IconButton(
+              onPressed: () {
+                context.push(RoutePaths.privateChatRoom.path
+                ,extra: PresenceEntity(
+                      id:"dc8df4d0-01ab-48ff-8e5d-50f1907c6e22",
+                      nickname: "test2@naver.com",
+                      profileImage: "http://10.0.2.2:54321/storage/v1/object/public/profile-image/public/profile_image_dc8df4d0-01ab-48ff-8e5d-50f1907c6e22"
+                    ));
+              },
+              icon: const Icon(Icons.people_alt_outlined)),
           IconButton(
               onPressed: () {
                 context.push(RoutePaths.openChat.path);

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:portfolio/data/model/chat/private_chat_message/local_private_chat_message.model.dart';
 import 'package:portfolio/domain/entity/auth/presence.entity.dart';
 
 import '../../../data/model/chat/private_chat_message/private_chat_message.model.dart';
@@ -74,5 +75,26 @@ class PrivateChatMessageEntity with _$PrivateChatMessageEntity {
               ),
         createdAt: model.created_at,
         isSender: model.sender_uid == currentUid);
+  }
+
+  factory PrivateChatMessageEntity.fromLocalModel(
+      LocalPrivateChatMessageModel model,
+      {required String currentUid}) {
+    final isSender = model.sender_uid == currentUid;
+    return PrivateChatMessageEntity(
+        id: model.id.isNotEmpty ? model.id : null,
+        chatId: model.chat_id.isNotEmpty ? model.chat_id : null,
+        content: model.content.isNotEmpty ? model.content : null,
+        opponent: isSender
+            ? PresenceEntity(
+                id: model.receiver_uid,
+                nickname: model.receiver_nickname,
+                profileImage: model.receiver_profile_image)
+            : PresenceEntity(
+                id: model.sender_uid,
+                nickname: model.sender_nickname,
+                profileImage: model.sender_profile_image),
+        createdAt: model.created_at,
+        isSender: isSender);
   }
 }

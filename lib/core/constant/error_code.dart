@@ -1,6 +1,7 @@
 enum ErrorCode {
   auth(code: "auth", message: "auth error"),
   postgres(code: "postgres", message: "database error"),
+  sqlite(code: "sqlite", message: "database error"),
   bucket(code: "bucket", message: "storage error"),
   unknown(code: "unknown", message: "unknown error occurs");
 

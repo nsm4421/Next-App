@@ -23,6 +23,8 @@ part 'scenario/fetch_chat_message.usecase.dart';
 
 part 'scenario/delete_private_chat_message.usecase.dart';
 
+part "scenario/insert_local_private_chat_message.usecase.dart";
+
 @lazySingleton
 class ChatUseCase {
   final OpenChatRepository _openChatRepository;
@@ -77,4 +79,8 @@ class ChatUseCase {
   /// 메세지 삭제
   DeletePrivateChatMessageEvent get deletePrivateChatMessage =>
       DeletePrivateChatMessageEvent(_privateChatMessageRepository);
+
+  /// 로컬 DB Insert
+  InsertLocalPrivateChatMessageUseCase get insertOnLocal =>
+      InsertLocalPrivateChatMessageUseCase(_privateChatMessageRepository);
 }

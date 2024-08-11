@@ -25,9 +25,8 @@ class FetchLatestChatMessageUseCase {
 
   FetchLatestChatMessageUseCase(this._repository);
 
-  Future<ResponseWrapper<List<PrivateChatMessageEntity>>> call(
-      DateTime afterAt) async {
-    return await _repository.fetchLastMessages(afterAt);
+  Future<ResponseWrapper<List<PrivateChatMessageEntity>>> call() async {
+    return await _repository.fetchLastMessages();
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:portfolio/core/util/local_db.util.dart';
 import 'package:portfolio/presentation/bloc/auth/auth.bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -21,6 +22,9 @@ Future<void> main() async {
   await Supabase.initialize(
       url: dotenv.env["SUPABASE_URL"]!,
       anonKey: dotenv.env["SUPABASE_ANON_KEY"]!);
+
+  // 로컬 DB 초기화
+  LocalDatabaseUtil.instance.initDatabase();
 
   // 의존성 주입
   configureDependencies();

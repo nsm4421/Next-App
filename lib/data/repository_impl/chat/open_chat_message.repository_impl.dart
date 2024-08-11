@@ -47,7 +47,7 @@ class OpenChatMessageRepositoryImpl implements OpenChatMessageRepository {
       OpenChatMessageEntity entity) async {
     try {
       await _dataSource
-          .createChatMessage(OpenChatMessageModel.fromEntity(entity));
+          .sendMessage(OpenChatMessageModel.fromEntity(entity));
       return ResponseWrapper.success(null);
     } catch (error) {
       throw CustomException.from(error);
@@ -90,7 +90,7 @@ class OpenChatMessageRepositoryImpl implements OpenChatMessageRepository {
   @override
   Future<ResponseWrapper<void>> deleteChatMessage(String messageId) async {
     try {
-      await _dataSource.deleteChatMessageById(messageId);
+      await _dataSource.deleteById(messageId);
       return ResponseWrapper.success(null);
     } catch (error) {
       throw CustomException.from(error);
